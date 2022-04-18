@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 'Prod'
     outputs:
-    output2: ${{steps.create_Prod_secret_variable.outputs.csp}}
+      output2: ${{steps.create_Prod_secret_variable.outputs.csp}}
 
     steps:
       - id: Check_Out_Repository
@@ -17,7 +17,7 @@ jobs:
       - id: create_Prod_secret_variable
         run: |
           ##${{secrets.AZURE_CERTIFICATE}}
-          #echo "::set-output name=csp::(echo -n '${{secrets.AZURE_CERTIFICATE}}')"
+          echo "::set-output name=csp::(echo -n '${{secrets.AZURE_CERTIFICATE}}')"
 
   dev_promote_model:
     runs-on: ubuntu-latest
