@@ -37,3 +37,4 @@ jobs:
           #vars=${{needs.download_prod_creds.outputs.output2}}
           #echo "token_in_other_job=$(echo -n ${vars} | base64 --decode | base64 --decode)" 
           echo $token_in_other_job
+          echo $GITHUB_ENV
