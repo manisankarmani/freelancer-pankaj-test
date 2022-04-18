@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 'prod'
     outputs:
-      output2: ${{steps.create_Prod_secret_variable.outputs.csp}}
+      output2: ${{steps.create_Prod_secret_variable.outputs.orig_encoded_token}}
 
     steps:
       - id: Check_Out_Repository
@@ -32,9 +32,9 @@ jobs:
   
       - id: Retrieve_prod_vars
         run: |
-          echo "token_in_other_job=$(echo -n ${orig_encoded_token} | base64 --decode | base64 --decode)" >> $GITHUB_ENV
+          #echo "token_in_other_job=$(echo -n ${orig_encoded_token} | base64 --decode | base64 --decode)" >> $GITHUB_ENV
           #echo "token_in_other_job=$(echo -n ${csp} | base64 --decode | base64 --decode)" 
-          #vars=${{needs.download_prod_creds.outputs.output2}}
-          #echo "token_in_other_job=$(echo -n ${vars} | base64 --decode | base64 --decode)" 
+          vars=${{needs.download_prod_creds.outputs.output2}}
+          echo "token_in_other_job=$(echo -n ${vars} | base64 --decode | base64 --decode)" 
           echo $token_in_other_job
-          echo $GITHUB_ENV
+          
