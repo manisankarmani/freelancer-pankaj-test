@@ -6,7 +6,7 @@ on:
 jobs:
   download_prod_creds:
     runs-on: ubuntu-latest
-    environment: 'prod'
+    environment: 'Prod'
     outputs:
       output2: ${{steps.create_Prod_secret_variable.outputs.csp}}
 
