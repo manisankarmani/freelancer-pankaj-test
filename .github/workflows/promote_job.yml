@@ -6,7 +6,7 @@ on:
 jobs:
   download_prod_creds:
     runs-on: ubuntu-latest
-    environment: 'Prod'
+    environment: 'prod'
     outputs:
       output2: ${{steps.create_Prod_secret_variable.outputs.csp}}
 
@@ -16,7 +16,7 @@ jobs:
 
       - id: create_Prod_secret_variable
         run: |
-          ${{secrets.AZURE_CERTIFICATE}}
+          echo "${{secrets.AZURE_CERTIFICATE}}"
           echo "::set-output name=csp::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 | base64)"
           echo "::set-output name=csp::(echo -n '${{secrets.AZURE_CERTIFICATE}}')"
 
