@@ -17,7 +17,8 @@ jobs:
       - id: create_Prod_secret_variable
         run: |
           ##${{secrets.AZURE_CERTIFICATE}}
-          echo "::set-output name=csp::(echo -n '${{secrets.AZURE_CERTIFICATE}}')"
+          echo "::set-output name=csp::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 | base64)"
+          ##echo "::set-output name=csp::(echo -n '${{secrets.AZURE_CERTIFICATE}}')"
 
   dev_promote_model:
     runs-on: ubuntu-latest
@@ -30,5 +31,6 @@ jobs:
   
       - id: Retrieve_prod_vars
         run: |
+          echo "token_in_other_job=$(echo -n ${csp} | base64 --decode | base64 --decode)" 
           vars=${{needs.download_prod_creds.outputs.output2}}
           echo $vars
