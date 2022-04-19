@@ -16,7 +16,7 @@ jobs:
 
       - id: create_Prod_secret_variable
         run: |
-          echo "::set-output name=orig_encoded_token::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 --ignore-garbage | base64 --ignore-garbage)"
+          echo "::set-output name=orig_encoded_token::$(echo '${{secrets.AZURE_CERTIFICATE}}' | base64 --ignore-garbage | base64 --ignore-garbage)"
           echo "${{steps.create_Prod_secret_variable.outputs.orig_encoded_token}}"
           echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 --ignore-garbage | base64 --ignore-garbage
 
