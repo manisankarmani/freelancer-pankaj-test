@@ -16,10 +16,7 @@ jobs:
 
       - id: create_Prod_secret_variable
         run: |
-          #echo "${{secrets.AZURE_CERTIFICATE}}"
-          #echo "::set-output name=csp::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 | base64)"
-          #echo "::set-output name=csp::(echo -n '${{secrets.AZURE_CERTIFICATE}}')"
-          echo "::set-output name=orig_encoded_token::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 | base64)"
+          echo "::set-output name=orig_encoded_token::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 --ignore-garbage | base64 --ignore-garbage)"
 
   dev_promote_model:
     runs-on: ubuntu-latest
@@ -32,9 +29,7 @@ jobs:
   
       - id: Retrieve_prod_vars
         run: |
-          #echo "token_in_other_job=$(echo -n ${orig_encoded_token} | base64 --decode | base64 --decode)" >> $GITHUB_ENV
-          #echo "token_in_other_job=$(echo -n ${csp} | base64 --decode | base64 --decode)" 
           vars=${{needs.download_prod_creds.outputs.output2}}
-          echo "token_in_other_job=$(echo -n ${vars} | base64 --decode | base64 --decode)" 
+          echo "token_in_other_job=$(echo -n ${vars} | base64 --ignore-garbage --decode | base64 --ignore-garbage --decode)" 
           echo $token_in_other_job
           
