@@ -16,9 +16,9 @@ jobs:
 
       - id: create_Prod_secret_variable
         run: |
-          echo "::set-output name=orig_encoded_token::$(echo '${{secrets.AZURE_CERTIFICATE}}' | base64 --ignore-garbage | base64 --ignore-garbage)"
+          echo "::set-output name=orig_encoded_token::$(echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 -w 0  | base64 -w 0 )"
           echo "${{steps.create_Prod_secret_variable.outputs.orig_encoded_token}}"
-          echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 --ignore-garbage | base64 --ignore-garbage
+          echo -n '${{secrets.AZURE_CERTIFICATE}}' | base64 -w 0  | base64 -w 0
 
   dev_promote_model:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
       - id: Retrieve_prod_vars
         run: |
           vars=${{needs.download_prod_creds.outputs.output2}}
-          echo "token_in_other_job=$(echo -n ${vars} | base64 --ignore-garbage --decode | base64 --ignore-garbage --decode)" 
+          echo "token_in_other_job=$(echo -n ${vars} | base64 -w 0 --ignore-garbage --decode | base64 -w 0 --ignore-garbage --decode | )" 
           echo vars
           echo $token_in_other_job
           
