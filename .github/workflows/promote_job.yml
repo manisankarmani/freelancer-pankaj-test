@@ -32,7 +32,7 @@ jobs:
       - id: Retrieve_prod_vars
         run: |
           vars=${{needs.download_prod_creds.outputs.output2}}
-          echo "token_in_other_job=$(echo -n ${vars} | base64 -w 0 --ignore-garbage --decode | base64 -w 0 --ignore-garbage --decode  )" 
+          echo "token_in_other_job=$(echo -n ${vars} | base64 --ignore-garbage --decode | base64 -ignore-garbage --decode  )" 
           echo vars
           echo $token_in_other_job
           
